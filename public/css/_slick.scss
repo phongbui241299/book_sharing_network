@@ -1,0 +1,42 @@
+@import "variable";
+.intro__slick{
+    &--component{
+        outline: none;
+    }
+}
+.content_slick_1{
+    position: relative;
+    &--title{
+        position: absolute;
+        right: 68.4%;
+        top: 21%;
+        color: darkgray;
+        letter-spacing: 0.3rem;
+    }
+    &--intro {
+        position: absolute;
+        top: 25%;
+        right: 63%;
+        font-size: 40px;
+    }
+    &--detail{
+        position: absolute;
+        top: 40%;
+        right: 44.5%;
+        width: 46%;
+        font-size: 20px;
+    }
+}
+.content_slick_2{
+    position: relative;
+    &--content--1{
+        position: absolute;
+        top: 50%;
+        right: 14.5%;
+        width: 46%;
+        font-size: 40px;
+    }
+}
+.content_slick_3{
+    position: relative;
+}

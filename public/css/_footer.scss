@@ -1,0 +1,52 @@
+@import 'variable';
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.foot {
+    background-color: $color_7;
+    color: $color_2;
+    display: grid;
+    height: fit-content;
+
+    .all {
+        .divide {
+            .introduction {
+                width: 40%;
+                &__title{
+                    padding-top: 20px;
+                    font-size: 22px;
+                }
+                &__content{
+                    font-size: 18px;
+                    width: 85%;
+                }
+            }
+
+            .contact {
+                width: 60%;
+            }
+        }
+    }
+
+    .intro-detail {
+        text-align: center;
+
+    }
+
+    .bottom_footer {
+        width: 100%;
+        height: 50px;
+        text-align: center;
+        background-color: $color_1;
+
+        .author {
+            margin: 15px;
+            font-family: monospace;
+            font-size: 20px;
+            line-height: 50px;
+        }
+
+    }
+}

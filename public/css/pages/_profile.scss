@@ -1,0 +1,28 @@
+@import '../variable';
+.profile{
+    width: 100%;
+    height: max-content;
+}
+.history_transaction{
+    width: 100%;
+    max-height: max-content;
+    padding-bottom: 40px;
+
+    &_content{
+        width: 17%;
+        margin-top: 58px;
+        > p{
+            text-align: center;
+        }
+    }
+    &_image{
+        width: 17%;
+    }
+}
+
+.transaction_state{
+    width: 66px;
+    line-height: 136px;
+        text-align: center;
+
+}

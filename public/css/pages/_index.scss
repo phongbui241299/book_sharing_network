@@ -1,0 +1,71 @@
+// css cho page home
+@import '../variable';
+.index{
+    width: 100%;
+    min-height: 800px;
+}
+.index__filter{
+    &__menu{
+        > li{
+            padding: 0 16px;
+        }
+    }
+}
+.index__books{
+    width: 100%;
+    margin-top: 50px;
+    &-report{
+        > p{
+            text-align: center;
+        }
+    }
+
+
+}
+.position_book{
+    justify-content: center;
+    min-height: 360px;
+    padding-top: 25px;
+    a{
+        text-decoration: none;
+    }
+    &:hover{
+        border: 1px solid grey;
+        border-radius: 5px;
+    }
+}
+.link-name{
+    text-align: center;
+    padding-top: 15px;
+
+
+    &:hover{
+        //font-size: 15px;
+        color: $color-10;
+
+    }
+}
+.title_name{
+    text-align: center;
+    padding-bottom: 45px;
+    font-size: 40px;
+    //text-transform: uppercase;
+}
+.profile__image{
+    &__designer{
+        position: relative;
+        text-align: center;
+        width: 33%;
+        //justify-content: center;
+
+    }
+}
+.designer{
+    padding-top: 15px;
+}
+.role{
+    color: grey;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}

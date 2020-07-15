@@ -40,7 +40,8 @@
                 @foreach($type as $type_book)
                 <tbody>
                 <tr>
-                    <form class='mr-1' action='{{route('update_type_book_manager',$type_book->type_id)}}' method='post'>
+                    <form class='mr-1' action='{{route('update_type_book_manager',$type_book->type_id)}}' method='POST'>
+                        @csrf
                         <th scope=\"row\">{{$type_book->type_id}}</th>
                         <td scope="row">
                             <input class="form-control form-text" type="text" placeholder="Tên loại"
@@ -48,15 +49,20 @@
                         </td>
                         <td>
                             <input class="form-control form-text" type="text" name="slug"
-                                   placeholder="Viết tắt" readonly value="{{$type_book->slug}}">
+                                    readonly value="{{$type_book->slug}}">
                         </td>
                         <td>
-                            <input class="form-control form-text" type="number" name="state"
-                                   value="{{$type_book->state}}">
+                            <div class="form-group">
+                                <select id="type_id" name="state">
+                                    <option disabled selected>{{$type_book->state}}</option>
+                                    <option value="0">Hiện</option>
+                                    <option value="1">Ẩn</option>
+                                </select>
+                            </div>
                         </td>
                         <td class='d-flex justify-content-start'>
                             <div role='group' aria-label='Basic example'>
-                                <button type='submit' class='btn btn-outline-info'> Cập nhật</button>
+                                <button type='submit' class='btn btn-outline-info'>Cập nhật</button>
                             </div>
                     </form>
                 </tr>

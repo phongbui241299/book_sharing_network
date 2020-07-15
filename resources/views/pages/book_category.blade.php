@@ -11,10 +11,12 @@
     <div class="container index">
         <div class="detail_page_type">
             <span>
+
                 <a class="font-3 font-w400" href="{{route('index')}}">Trang chủ</a>&ensp;
                     <i class="fa fa-caret-right"></i>&ensp;
             </span>
         </div>
+
         <div class="d-flex row index__books container">
             @if(count($filter_type_book)<=0)
                 <div class="container">
@@ -22,12 +24,15 @@
                 </div>
                     @else
                 @foreach($filter_type_book as $book)
+                    @if($book -> role == 3)
+                    @else
                     <div class="col-3 d-flex position_book">
                         <a href={{route('books_detail',$book->books_id)}}>
                             <img src="/{{$book->image}}" alt="" width="240px" height="280px">
                             <p class="link-name">{{$book->book_name}}</p>
                         </a>
                     </div>
+                    @endif
                 @endforeach
             @endif
         </div>

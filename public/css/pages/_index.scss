@@ -6,6 +6,7 @@
 }
 .index__filter{
     &__menu{
+        margin-top: 40px;
         > li{
             padding: 0 16px;
         }
@@ -13,7 +14,9 @@
 }
 .index__books{
     width: 100%;
-    margin-top: 50px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+
     &-report{
         > p{
             text-align: center;
@@ -21,6 +24,9 @@
     }
 
 
+}
+.index__designer {
+    margin-bottom: 40px;
 }
 .nav__filter{
     width: 115px;

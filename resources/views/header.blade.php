@@ -27,7 +27,10 @@
                     <li class="nav__menu_li"><a href="#">Thể Loại&nbsp;<i class="fa fa-angle-down"></i></a>
                         <ul class="menu__nav list-style-none font-w400 font-3">
                             @foreach($book_type as $type)
+                                @if($type -> state == 0)
                                 <li><a href="{{route("getBookByCategory",$type->slug)}}">{{$type->type_name}}</a></li>
+                                @else
+                                @endif
                             @endforeach
                         </ul>
                     </li>

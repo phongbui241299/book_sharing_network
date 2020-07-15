@@ -1,15 +1,22 @@
 @extends('master')
 @section('content')
     <div class="container slide_detail_book">
-        <img src="/images/slide_profile.jpg" alt="" srcset="" width="100%" height="100%">
+
         @if (Auth::check() && Auth::user()->user_id != $user->user_id)
-            <p class="font-3 font-w500 p--slide_profile" style="right: 45%;">Owner info</p>
+            <img src="/images/slide_owner.jpg" alt="" srcset="" width="100%" height="100%">
+            <p class="font-3 font-w500 p--slide_profile" style="right: 45%;color: white">Owner info</p>
+            <p class="font-2 font-w500 slide_profile" style="color:white;">Introduction</p>
+
         @elseif(!Auth::check())
-        <p class="font-3 font-w500 p--slide_profile" style="right: 45%;">Owner info</p>
+            <img src="/images/slide_owner.jpg" alt="" srcset="" width="100%" height="100%">
+            <p class="font-3 font-w500 p--slide_profile" style="right: 45%;color: white">Owner info</p>
+            <p class="font-2 font-w500 slide_profile" style="color:white;">Introduction</p>
+
         @else
+            <img src="/images/slide_profile.jpg" alt="" srcset="" width="100%" height="100%">
             <p class="font-3 font-w500 p--slide_profile">Your info</p>
+            <p class="font-2 font-w500 slide_profile">Introduction</p>
         @endif
-        <p class="font-2 font-w500 slide_profile">Introduction</p>
     </div>
     <div class="container index">
         <div class="detail_page_type">

@@ -89,7 +89,10 @@
   width: 85%;
 }
 .foot .all .divide .contact {
-  width: 60%;
+  width: 25%;
+}
+.foot .all .divide .logo_footer {
+  width: 35%;
 }
 .foot .intro-detail {
   text-align: center;
@@ -419,16 +422,24 @@ i.fa.fa-angle-right {
   min-height: 800px;
 }
 
+.index__filter__menu {
+  margin-top: 40px;
+}
 .index__filter__menu > li {
   padding: 0 16px;
 }
 
 .index__books {
   width: 100%;
-  margin-top: 50px;
+  margin-top: 10px;
+  margin-bottom: 50px;
 }
 .index__books-report > p {
   text-align: center;
+}
+
+.index__designer {
+  margin-bottom: 40px;
 }
 
 .nav__filter {

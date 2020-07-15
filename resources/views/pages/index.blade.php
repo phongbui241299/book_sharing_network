@@ -11,18 +11,19 @@
     <div class="container index">
         <div class="d-flex index__filter">
             <ul class="d-flex list-style-none index__filter__menu">
-                <li class="nav__filter"><a href="#">Tất cả</a></li>
-                <li class="nav__filter" style="margin-left: 35px;"><a href="#">Mới nhất</a></li>
-{{--                <li><a href="#">Tác giả hot</a></li>--}}
+                <li class="nav__filter"><a href="">Tất cả</a></li>
             </ul>
         </div>
         <div class="d-flex row index__books container">
             @foreach($books as $book)
+            @if($book->role == 3)
+                @else
             <div class="col-3 d-flex position_book">
                 <a href={{route('books_detail',$book->books_id)}}>
                     <img src="/{{$book->image}}" alt="" width="240px" height="280px">
                     <p class="link-name">{{$book->book_name}}</p></a>
             </div>
+                @endif
             @endforeach
 {{--            {{ $books->links() }}--}}
         </div>

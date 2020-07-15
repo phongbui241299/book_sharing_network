@@ -14,10 +14,18 @@ class AdminController extends Controller
     public function book__manager()
     {
         $books = DB::table('books')
-            ->join('book_type','books.type_id','=','books.type_id')
+            ->join('book_type','books.type_id','=','book_type.type_id')
             ->select('books.*', 'book_type.*')
             ->get();
         return view('admin.book__manager', compact('books'));
+    }
+
+    public function admin_delete_books($id)
+    {
+        $books = DB::table('books')->where('books_id',$id)->delete();
+        $rawMsg = 'Bạn đã xóa sách thành công';
+        $msg = "$rawMsg";
+        return redirect()->back()->with("delete_mes", $msg);
     }
 
     public function account__manager()
@@ -26,10 +34,13 @@ class AdminController extends Controller
         return view('admin.account__manager',compact('user'));
     }
 
-    public function delete_user($id)
+    public function delete_user(Request $request, $id)
     {
-        $id_del = DB::table('user')->where('user_id',$id)->delete();
-        $rawMsg = 'Bạn đã xóa người dùng thành công';
+        $user = DB::table('user')->where('user_id', $id)
+            ->update([
+                'role' => $request->role,
+            ]);
+        $rawMsg = 'Bạn đã vô hiệu hóa người dùng thành công';
         $msg = "$rawMsg";
         return redirect()->back()->with("delete_mes", $msg);
     }

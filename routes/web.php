@@ -70,17 +70,17 @@ Route::group(['prefix'=>'account'], function (){
 
 Route::group(['prefix'=>'dashboard'], function () {
     Route::get('/books', 'AdminController@book__manager')->name('book__manager');
-    Route::post('/delete_user/{id}','AdminController@delete_user')->name('delete_user');
-
+    Route::post('/admin_delete_books/{id}','AdminController@admin_delete_books')->name('admin_delete_books');
 });
 
 Route::group(['prefix'=>'account_manage'], function () {
     Route::get('/account', 'AdminController@account__manager')->name('account__manager');
+    Route::post('/delete_user/{id}','AdminController@delete_user')->name('delete_user');
 });
 
 Route::group(['prefix'=>'type_manage'], function () {
     Route::get('/type_book_manager', 'AdminController@type_book_manager')->name('type_book_manager');
-    Route::post('/update_type_book_manager/{id?}', 'AdminController@update_type_book_manager')->name('update_type_book_manager');
+    Route::post('/update_type_book_manager/{id}', 'AdminController@update_type_book_manager')->name('update_type_book_manager');
 });
 Route::get('/search','HomeController@search');
 Route::get('/filter','HomeController@search_ajax');

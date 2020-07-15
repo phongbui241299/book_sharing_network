@@ -14,11 +14,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $books = DB::table('books')->get();
-//        $books = DB::table('books')->paginate(2);
-//        dd($books);
-        $user_login = DB::table('user')->get();
-        return view('pages.index', compact('books', 'user_login'));
+        $books = DB::table('books')
+            ->join('user','books.uploader','=','user.user_id')
+            ->select('user.*','books.*')
+            ->get();
+
+        return view('pages.index', compact('books'));
     }
 
 
@@ -222,18 +223,24 @@ class HomeController extends Controller
     public function getBookByCategory($name)
     {
         $name = $this->normallizeString($name);
+        $books = DB::table('books')
+            ->join('user','books.uploader','=','user.user_id')
+            ->select('user.*','books.*')
+            ->get();
         $type_book = DB::table("books")->join("book_type", "books.type_id", "=", "book_type.type_id")
             ->where('book_type.slug', "=", $name)
             ->get();
-//        $filter_type_book = DB::table("books")->join("book_type", "books.type_id", "=", "book_type.type_id")
-//            ->where('book_type.slug', "=", $name)->paginate(2);
-        $filter_type_book = DB::table("books")->join("book_type", "books.type_id", "=", "book_type.type_id")
-            ->where('book_type.slug', "=", $name)->select('books.*','book_type.*')->get();
+        $filter_type_book = DB::table("books")
+            ->join("book_type", "books.type_id", "=", "book_type.type_id")
+            ->join('user','books.uploader','=','user.user_id')
+            ->where('book_type.slug', "=", $name)
+            ->select('books.*','book_type.*','user.*')
+            ->get();
         $collection = collect($type_book);
         $unique_collection = $collection->unique('type_name');
         $unique_collection->values()->all();
 //          echo json_encode($type_book);
-        return view('pages.book_category', compact('filter_type_book', 'unique_collection'));
+        return view('pages.book_category', compact('filter_type_book', 'unique_collection','books'));
     }
     public function findBookByName(Request $request)
     {

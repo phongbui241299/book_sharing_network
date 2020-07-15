@@ -13,17 +13,14 @@
             <span>
                 <a class="font-3 font-w400" href="{{route('index')}}">Trang chủ</a>&ensp;
                     <i class="fa fa-caret-right"></i>&ensp;
-                @foreach($unique_collection as $book)
-                    <a class="font-3 font-w400" href="">{{$book->type_name}}</a>&ensp;
-                @endforeach
             </span>
         </div>
         <div class="d-flex row index__books container">
             @if(count($filter_type_book)<=0)
-                <div class="index__books-report">
-                    <p>Không có loại sách cần tìm</p>
+                <div class="container">
+                    <p class="alert alert-secondary">Không có loại sách cần tìm</p>
                 </div>
-            @else
+                    @else
                 @foreach($filter_type_book as $book)
                     <div class="col-3 d-flex position_book">
                         <a href={{route('books_detail',$book->books_id)}}>
@@ -34,10 +31,5 @@
                 @endforeach
             @endif
         </div>
-{{--        {!! $filter_type_book->appends(Request::all())->links() !!}--}}
-{{--        <div class="d-lex row index__designer">--}}
-{{--            <p class="font-3 font-w400 author_name">Designer of pages</p>--}}
-
-{{--        </div>--}}
     </div>
 @endsection

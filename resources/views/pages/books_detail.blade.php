@@ -10,6 +10,9 @@
     @if(session("message_success"))
         <?php echo session("message_success"); ?>
     @endif
+    @if(session("message_cmt"))
+        <?php echo session("message_cmt"); ?>
+    @endif
     <div class="container slide_detail_book">
         <img src="/images/slide_detail_book.jpg" alt="" srcset="" width="100%" height="100%">
         <p class="font-2 font-w500 slide_detail_book--p">Book is my best friend</p>
@@ -34,35 +37,34 @@
                     <p class="font-3 font-w400 detail_name">Số trang: {{$book->page_number}}</p>
 
                     <ul class="d-flex list-style-none nav__menu">
-                        @if (Auth::check() && Auth::user()->user_id != $book->uploader)
+                        @if (Auth::check() && Auth::user()->user_id != $book->uploader && Auth::user()->role == 0)
                             <form action="<?php echo "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']; ?>" method="POST">
                                 @csrf
                                 <input class="borrow_button" type="submit" value="Mượn sách">
                             </form>
+                            <li><a class="font-2 font-w500" href="{{route('profile',$book->uploader)}}">Người sở hữu</a></li>
+                        @elseif(Auth::check() && Auth::user()->role == 1)
+                            <input class="borrow_button" type="submit" value="Xóa sách">
+                            <li><a class="font-2 font-w500" href="{{route('profile',$book->uploader)}}">Người sở hữu</a></li>
+                        @endif
+                        @if (!Auth::check())
+                            <input class="borrow_button"  onclick="warning__borrow()" type="submit" value="Mượn sách">
+                                <li><a class="font-2 font-w500" href="{{route('profile',$book->uploader)}}">Người sở hữu</a></li>
                         @else
                         @endif
-                            <li><a class="font-2 font-w500" href="{{route('profile',$book->uploader)}}">Người sở hữu</a></li>
+                        @if (Auth::check() && Auth::user()->user_id == $book->uploader)
+                                <li><a readonly class="font-2 font-w500" href="{{route('profile',$book->uploader)}}">Đây là sách của bạn</a></li>
+                                <li><a readonly class="font-2 font-w500" href="{{route('get_edit__books',$book->books_id)}}">Sửa sách</a></li>
+                                <li><a readonly class="font-2 font-w500" href="{{route('delete_books',request()->route('id'))}}">Xóa sách</a></li>
+
+                            @else
+                            @endif
 
                     </ul>
                     <p class="font-3 font-w400">Giới thiệu:</p>
                     <p class="font-2 font-w400 detail_name">{!! $book->status !!}</p>
                 </div>
             </div>
-            <div class="comment_books">
-                <p class="font-3 font-w500">Bình luận:</p>
-                <div>
-
-                </div>
-                <div class="comment_books_input">
-                    <div class="form-group">
-                        <label for="comment"><b class="font-3 font-w500">Nhập bình luận của bạn:</b></label>
-                        <textarea name="comment" id="comment"></textarea>
-                    </div>
-                </div>
-            </div>
         @endforeach
     </div>
-@endsection
-@section('js')
-    <script>CKEDITOR.replace('comment');</script>
 @endsection

@@ -22,6 +22,25 @@
 
 
 }
+.nav__filter{
+    width: 115px;
+    height: 45px;
+    border: 1px solid bisque;
+    line-height: 45px;
+    background: bisque;
+    border-radius: 10px;
+    display: grid;
+    &:hover{
+        background-color: lightsalmon;
+        transition: 0.3s ease-in-out;
+
+    }
+    > a{
+        text-align: center;
+        color: black;
+        text-decoration: none;
+    }
+}
 .position_book{
     justify-content: center;
     min-height: 360px;
@@ -31,6 +50,8 @@
     }
     &:hover{
         border: 1px solid grey;
+        transition: 0.3s ease-in-out;
+        background-color: bisque;
         border-radius: 5px;
     }
 }

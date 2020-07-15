@@ -16,12 +16,12 @@
 
 </head>
 <body>
+@include('header')
 
 <div id="app">
-    @include('header')
-
+    <div id="page">
     @yield('content')
-
+    </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="/js/ckeditor/ckeditor.js"></script>

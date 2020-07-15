@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Book_type;
 use App\Books;
+use App\Comments;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Auth;
@@ -13,6 +15,8 @@ class HomeController extends Controller
     public function index()
     {
         $books = DB::table('books')->get();
+//        $books = DB::table('books')->paginate(2);
+//        dd($books);
         $user_login = DB::table('user')->get();
         return view('pages.index', compact('books', 'user_login'));
     }
@@ -148,7 +152,6 @@ class HomeController extends Controller
                 return redirect()->back()->with("message_return", $msg);
 
             } else {
-
                 $rawMsg = "Trả sách thất bại!";
                 $msg = "<p><div class=\"alert alert-danger\">$rawMsg</div></p>";
                 return redirect()->back()->with("message_fail", $msg);
@@ -161,14 +164,21 @@ class HomeController extends Controller
     public function add__books()
     {
         $book_type = DB::table('book_type')->get();
-//        if (Auth::check() && Auth::user()->role == 0) {
             return view('pages.add__books', compact('book_type'));
-//        } else {
-//            $rawMsg = 'Vui lòng đăng nhập để thêm sách!';
-//            $msg = "<p><div class=\"alert alert-warning\">$rawMsg</p></div>";
-//            return redirect('account/login')->with("mess", $msg);        }
     }
 
+    public function add_type_books(){
+        return view('admin.post_type_books');
+    }
+    public function post_type_books(Request $request){
+        $book_type = new book_type();
+        $book_type->type_name = strtoupper($request->type_name);
+        $book_type->slug = ($request->slug);
+        $book_type->save();
+        $rawMsg = 'Bạn đã thêm loại sách thành công';
+        $msg = "$rawMsg";
+        return redirect()->back()->with("mess_type_book",$msg);
+    }
 
     public function post_add_books(Request $request)
     {
@@ -187,17 +197,17 @@ class HomeController extends Controller
 //        echo json_encode($books);
         $books->save();
         $rawMsg = 'Bạn đã đăng sách thành công';
-        $msg = "<p><div class=\"alert alert-success\">$rawMsg</div></p>";
+        $msg = "$rawMsg";
         return redirect()->back()->with("message",$msg);
     }
 
 
-    public function delete($books_id)
+    public function delete_books($id)
     {
-        $books_id = books::find($books_id);
-        $books_id->delete();
-        return redirect()->back();
-
+        $id_del = DB::table('books')->where('books_id',$id)->delete();
+        $rawMsg = 'Bạn đã xóa sách thành công';
+        $msg = "$rawMsg";
+        return redirect('/')->with("delete_mes", $msg);
     }
 
     private function normallizeString($string)
@@ -213,24 +223,23 @@ class HomeController extends Controller
     {
         $name = $this->normallizeString($name);
         $type_book = DB::table("books")->join("book_type", "books.type_id", "=", "book_type.type_id")
-            ->where('book_type.slug', "=", $name)->get();
+            ->where('book_type.slug', "=", $name)
+            ->get();
 //        $filter_type_book = DB::table("books")->join("book_type", "books.type_id", "=", "book_type.type_id")
 //            ->where('book_type.slug', "=", $name)->paginate(2);
         $filter_type_book = DB::table("books")->join("book_type", "books.type_id", "=", "book_type.type_id")
-            ->where('book_type.slug', "=", $name)->get();
+            ->where('book_type.slug', "=", $name)->select('books.*','book_type.*')->get();
         $collection = collect($type_book);
         $unique_collection = $collection->unique('type_name');
         $unique_collection->values()->all();
 //          echo json_encode($type_book);
         return view('pages.book_category', compact('filter_type_book', 'unique_collection'));
     }
-
     public function findBookByName(Request $request)
     {
-        $name = $request->query("search");
-        $name = $this->normallizeString($name);
-        $books = DB::table("books")->where("book_name", "LIKE", '%', $name)->get();
-//        echo json_encode($books);
+        $name = $request->search;
+//        $name = $this->normallizeString($name);
+        $books = DB::table("books")->where("book_name", "LIKE", '%' .$name. '%')->get();
         return view('pages.book__find', compact('books'));
     }
 
@@ -239,7 +248,6 @@ class HomeController extends Controller
         strip_tags($id);
         $id = intval($id);
         $user = DB::table("user")->where("user_id", "=", "$id")->get();
-//        echo json_encode($user);
         $user = $user->first();
         //query truy van giao dich
         $transactions = DB::table('transaction')
@@ -247,28 +255,122 @@ class HomeController extends Controller
             ->select('books.*', 'transaction.*')
             ->where('transaction.user_id', '=', "$user->user_id")
             ->get();
+        $address = DB::table("user")
+            ->join('devvn_tinhthanhpho','user.city','=','devvn_tinhthanhpho.matp')
+            ->join('devvn_quanhuyen','user.district','=','devvn_quanhuyen.maqh')
+            ->join('ward','user.ward','=','ward.id')
+            ->select('user.*','ward.*','devvn_tinhthanhpho.*','devvn_quanhuyen.*' )
+            ->where('user.user_id',$id)
+            ->get();
+//        dd($address);
         //hien thi sach dang so huu
         $books = DB::table('books')
             ->join('user', 'books.uploader', '=', 'user.user_id')
             ->select('books.*', 'user.*')
             ->where('books.uploader', '=', "$user->user_id")
             ->get();
-        return view('pages.profile', compact(['user', 'transactions', 'books']));
+        return view('pages.profile', compact(['user', 'transactions', 'books','address']));
+    }
+    public function get_edit__profile($id){
+//        strip_tags($id);
+//        $id = intval($id);
+        $city = DB::table('devvn_tinhthanhpho')->get();
+        $user = DB::table("user")->where("user_id", "=", $id)->get();
+        $address = DB::table("user")
+            ->join('devvn_tinhthanhpho','user.city','=','devvn_tinhthanhpho.matp')
+            ->join('devvn_quanhuyen','user.district','=','devvn_quanhuyen.maqh')
+            ->join('ward','user.ward','=','ward.id')
+            ->select('user.*','ward.*','devvn_tinhthanhpho.*','devvn_quanhuyen.*' )
+            ->where('user.user_id',$id)
+            ->get();
+        return view('pages.edit__profile', compact('user','address','city'));
+    }
+    public function post_edit__profile(Request $request,$id)
+    {
+        $files = $request->avatar;
+        $file_name = time() . "_" . md5(rand(0, 99999)) . $files->getClientOriginalName();
+        $files->move('uploads/avatar', $file_name);
+        $user = DB::table('user')->where('user_id', $id)
+            ->update([
+                'user_name' =>  ucwords($request->name),
+                'password' => bcrypt($request->password),
+                'phone' => $request->phone,
+                'city' => $request->city,
+                'district' => $request->district,
+                'ward' => $request->ward,
+                'avatar' =>  "uploads/avatar/".$file_name,
+            ]);
+
+        $rawMsg = 'Bạn đã cập nhật thành công!';
+        $mess_update = "$rawMsg";
+        return redirect()->back()->with('mess_update',$mess_update);
     }
 
-    public function book__manager()
-    {
-        return view('admin.book__manager');
+    public function get_edit__books($id){
+        $book_type = DB::table('book_type')->get();
+        $book = DB::table('books')
+            ->where('books.books_id',$id)
+            ->get();
+        $user = DB::table("user")->get();
+        return view('pages.edit__books', compact('book','user','book_type'));
     }
-    public function account__manager()
-    {
-        return view('admin.account__manager');
+
+    public function post_edit_books(Request $request,$id){
+        $files = $request->book_image;
+        $file_name = time() . "_" . md5(rand(0, 99999)) . $files->getClientOriginalName();
+        $files->move('uploads/books', $file_name);
+        $book = DB::table('books')->where('books_id', $id)
+            ->update([
+                'book_name' =>  ucwords($request->book_name),
+                'author' => $request->author,
+                'type_id' => $request->type_id,
+                'publisher' => $request->publisher,
+                'page_number' => $request->page_number,
+                'status'=>$request->status,
+                'image' => "uploads/books/" . $file_name,
+            ]);
+        $rawMsg = 'Bạn đã cập nhật thành công!';
+        $mess_update = "$rawMsg";
+        return redirect()->back()->with('mess_update',$mess_update);
+    }
+
+
+    public function search_ajax(Request $request){
+        $value = $request->get('data');
+        $search_data = DB::table('books')->where('book_name', 'like', '%' .$value. '%')->get();
+//        dd($search);
+        return response()->json($search_data);
     }
 
     public function search(Request $request)
     {
-        $search_vl = $request->search_vl;
-        $search = DB::table('books')->where('book_name', 'like', '%' . $search_vl . '%')->get();
-        return response()->json($search);
+        $search_vl = $request->get('search');
+        $search = DB::table('books')->where('book_name', 'like', '%' .$search_vl. '%')->get();
+//        dd($search);
+        return view('pages.search',compact('search'));
+    }
+    public function getCity(Request $request){
+        $city_id = $request->city;
+        $city_lv1 = DB::table('devvn_quanhuyen')->where('matp',$city_id)->get();
+        return response()->json($city_lv1);
+    }
+    public function getDistrict(Request $request){
+        $district_id = $request->district;
+        $district_lv1 = DB::table('ward')->where('district_id',$district_id)->get();
+        return response()->json($district_lv1);
+    }
+    public function contact(){
+        return view('pages.contact');
+    }
+
+    public function user__list(){
+        $user = DB::table("user")
+            ->join('devvn_tinhthanhpho','user.city','=','devvn_tinhthanhpho.matp')
+            ->join('devvn_quanhuyen','user.district','=','devvn_quanhuyen.maqh')
+            ->join('ward','user.ward','=','ward.id')
+            ->select('user.*','ward.*','devvn_tinhthanhpho.*','devvn_quanhuyen.*','user.user_id' )
+            ->get();
+        return view('pages.user__list', compact('user'));
     }
 }
+

@@ -3,13 +3,16 @@
     @if(session("message"))
         <?php echo session("message"); ?>
     @endif
+    @if(session('delete_mes'))
+        <p class="alert alert-success">{{session('delete_mes')}}</p>
+    @endif
+
     @include('slick')
     <div class="container index">
-        <div class="index__filter">
+        <div class="d-flex index__filter">
             <ul class="d-flex list-style-none index__filter__menu">
-                <li><a href="#">Tất cả</a></li>
-                <li><a href="#">Mới nhất</a></li>
-                <li><a href="#">Sách phổ biến</a></li>
+                <li class="nav__filter"><a href="#">Tất cả</a></li>
+                <li class="nav__filter" style="margin-left: 35px;"><a href="#">Mới nhất</a></li>
 {{--                <li><a href="#">Tác giả hot</a></li>--}}
             </ul>
         </div>
@@ -21,20 +24,24 @@
                     <p class="link-name">{{$book->book_name}}</p></a>
             </div>
             @endforeach
-{{--            {!! $books->links() !!}--}}
+{{--            {{ $books->links() }}--}}
         </div>
         <div class="index__designer">
             <p class="font-2 font-w400 title_name">Author of the website:</p>
-            <div class="d-lex row profile__image">
+            <div class="d-lex row profile__image" style="width: 100%">
                 <div class="profile__image__designer">
-                <img src="/images/avatar__author__1.jpg" alt="" width="175px" height="175px" style="border-radius: 90px;">
+                    <a href="{{route('contact')}}">
+                        <img src="/images/avatar__author__1.jpg" alt="" width="175px" height="175px" style="border-radius: 90px;">
+                    </a>
                     <p class="font-3 font-w400 designer a">Quách Trần Thuận Phong</p>
                     <p class="font-3 font-w400 role">Tác giả</p>
                     <p class="font-3 font-w400 role">Sinh viên ĐH Cần Thơ</p>
 
                 </div>
                 <div class="profile__image__designer">
-                <img src="/images/avatar__author__2.jpg" alt="" width="175px" height="175px" style="border-radius: 90px;">
+                    <a href="{{route('contact')}}">
+                        <img src="/images/avatar__author__2.jpg" alt="" width="175px" height="175px" style="border-radius: 90px;">
+                    </a>
                     <p class="font-3 font-w400 designer">Phan Ngọc Thảo</p>
                     <p class="font-3 font-w400 role">Tác giả</p>
                     <p class="font-3 font-w400 role">Sinh viên ĐH Cần Thơ</p>

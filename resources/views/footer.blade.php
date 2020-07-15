@@ -11,9 +11,9 @@
                 <p class="font-2 font-w500 introduction__title">Thông tin liên hệ</p>
                 <div class="icon_contact">
                     <a href="#"><span><i class="fa fa-twitter"></i></span></a>
-                    <a href="#"><span><i class="fa fa-instagram"></i></span></a>
-                    <a href="#"><span><i class="fa fa-facebook"></i></span></a>
-                    <a href="#"><span><i class="fa fa-envelope"></i></span></a>
+                    <a href="https://www.instagram.com/cruz.phong_tp/"><span><i class="fa fa-instagram"></i></span></a>
+                    <a href="https://www.facebook.com/tranthuanphong.quach/"><span><i class="fa fa-facebook"></i></span></a>
+                    <a href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin"><span><i class="fa fa-envelope"></i></span></a>
                 </div>
 
             </div>

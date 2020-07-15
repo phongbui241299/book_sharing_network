@@ -27,18 +27,86 @@
         $('.bar__content').removeClass('active_bar');
         $('.overlay').removeClass('active_overlay');
     })
+    $('#search-content').css('display','none');
+    $('#search_value').keyup(function () {
+        let search_vl = $('#search_value').val().toLowerCase().trim();
+        $.get('/filter?data='+search_vl, function (data) {
+            // console.log(data);
+            $('#search-content').empty();
+            $.each(data, function (key,value) {
+                $('#search-content').append(`<a href="/books_detail/${value.books_id}"><img src="/${value.image}" width="30px" height="40px"></img>${value.book_name}</a><br>`);
+            })
+            // <img src="/{{$value_search->image}}" alt="" width="240px" height="280px">
 
-    // $('#search_value').keyup(function () {
-    //     let search_vl = $('#search_value').val().toLowerCase().trim();
-    //     $.get('/search?search_vl='+search_vl, function (data) {
-    //         $.each(data, function (key,value) {
-    //             $('.search-content').empty();
-    //              $('.search-content').append(`<p>${value.book_name}</p>`);
-    //         })
-    //     })
-    // })
-    //
+            if($('#search_value').val() === ''){
+                // console.log(value);
+                $('#search-content').css('display','none');
+            }else{
+                $('#search-content').css('display','block');
+            }
+        })
+    })
 
+        $('#re_password').on('keyup', function () {
+            let password = $('#password').val();
+            let re_password = $('#re_password').val();
+            if (re_password === password) {
+                $('#success_pass').html('Khớp mật khẩu');
+                $('#success_pass').removeClass('text-danger');
+                $('#success_pass').addClass('text-success');
+            } else {
+                $('#success_pass').html('Không khớp mật khẩu');
+                $('#success_pass').removeClass('text-success');
+                $('#success_pass').addClass('text-danger');
+            }
+        });
+
+
+// get api city for sign_up
+    $('#city').change(function () {
+        let city_vl = $(this).val();
+        $('#district').empty();
+        $.get('/city?city='+city_vl, function (data) {
+            // console.log(data);
+            $.each(data, function (key,value) {
+                $('#district').append(`<option value="${value.maqh}">${value.district_name}</option>`);
+
+            })
+            $('#district').change(function (){
+                let district_vl = $(this).val();
+                $('#ward').empty();
+                $.get('/district?district='+district_vl, function (district_data) {
+                    // console.log(district_data);
+                $.each(district_data, function (key,value) {
+                    $('#ward').append(`<option value="${value.id}">${value.ward_name}</option>`);
+                    })
+                })
+            })
+        })
+    })
+// get api city for edit_profile
+    $('#district_edit').empty();
+
+    $('#city_edit').change(function () {
+        let city_vl = $(this).val();
+        $.get('/city?city='+city_vl, function (data) {
+            // console.log(data);
+            $.each(data, function (key,value) {
+                $('#district_edit').append(`<option value="${value.maqh}">${value.district_name}</option>`);
+
+            })
+            $('#district_edit').change(function (){
+                let district_vl = $(this).val();
+                $('#ward_edit').empty();
+                $.get('/district?district='+district_vl, function (district_data) {
+                    // console.log(district_data);
+                    $.each(district_data, function (key,value) {
+                        $('#ward_edit').append(`<option value="${value.id}">${value.ward_name}</option>`);
+                    })
+                })
+            })
+        })
+    })
     $('.pagination a').unbind('click').on('click', function (e) {
         e.preventDefault();
         let page = $(this).attr('href').split('page=')[1];
@@ -63,76 +131,11 @@
             });
         }
     });
+
 })(jQuery);
 //--js--
-const provinces = document.getElementById("provinces");
-let provincesList =
-    ['Thành phố Hà Nội',
-              'Tỉnh Hà Giang',
-               'Tỉnh Cao Bằng',
-               'Tỉnh Bắc Kạn',
-               'Tỉnh Tuyên Quang',
-               'Tỉnh Lào Cai',
-               'Tỉnh Điện Biên',
-               'Tỉnh Lai Châu',
-               'Tỉnh Sơn La',
-               'Tỉnh Yên Bái',
-               'Tỉnh Hoà Bình',
-               'Tỉnh Thái Nguyên',
-               'Tỉnh Lạng Sơn',
-               'Tỉnh Quảng Ninh',
-               'Tỉnh Bắc Giang',
-               'Tỉnh Phú Thọ',
-               'Tỉnh Vĩnh Phúc',
-               'Tỉnh Bắc Ninh',
-               'Tỉnh Hải Dương',
-               'Thành phố Hải Phòng',
-               'Tỉnh Hưng Yên',
-               'Tỉnh Thái Bình',
-               'Tỉnh Hà Nam',
-               'Tỉnh Nam Định',
-               'Tỉnh Ninh Bình',
-               'Tỉnh Thanh Hóa',
-               'Tỉnh Nghệ An',
-               'Tỉnh Hà Tĩnh',
-               'Tỉnh Quảng Bình',
-               'Tỉnh Quảng Trị',
-               'Tỉnh Thừa Thiên Huế',
-               'Thành phố Đà Nẵng',
-               'Tỉnh Quảng Nam',
-               'Tỉnh Quảng Ngãi',
-               'Tỉnh Bình Định',
-               'Tỉnh Phú Yên',
-               'Tỉnh Khánh Hòa',
-               'Tỉnh Ninh Thuận',
-               'Tỉnh Bình Thuận',
-               'Tỉnh Kon Tum',
-               'Tỉnh Gia Lai',
-               'Tỉnh Đắk Lắk',
-               'Tỉnh Đắk Nông',
-               'Tỉnh Lâm Đồng',
-               'Tỉnh Bình Phước',
-               'Tỉnh Tây Ninh',
-               'Tỉnh Bình Dương',
-               'Tỉnh Đồng Nai',
-               'Tỉnh Bà Rịa - Vũng Tàu',
-               'Thành phố Hồ Chí Minh',
-               'Tỉnh Long An',
-               'Tỉnh Tiền Giang',
-               'Tỉnh Bến Tre',
-               'Tỉnh Trà Vinh',
-               'Tỉnh Vĩnh Long',
-               'Tỉnh Đồng Tháp',
-               'Tỉnh An Giang',
-               'Tỉnh Kiên Giang',
-               'Thành phố Cần Thơ',
-               'Tỉnh Hậu Giang',
-               'Tỉnh Sóc Trăng',
-               'Tỉnh Bạc Liêu',
-               'Tỉnh Cà Mau'];
-provinces.innerHTML = provincesList.map(
-    (item)=> `<option value="${item}">${item}</option>`
-);
-
-
+function warning__borrow(){
+    alert("Vui lòng đăng nhập để tiếp tục mượn sách");
+    location.replace('/account/login');
+}
 

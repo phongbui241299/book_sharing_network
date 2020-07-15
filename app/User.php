@@ -38,6 +38,9 @@ class User extends Authenticatable
 
     ];
 
+    public function profile(){
+        return $this->belongsTo('App\User','user_id');
+    }
     public function Comments()
     {
         return $this->hasMany('App\Comments', 'user_id');

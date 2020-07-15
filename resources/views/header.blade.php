@@ -7,9 +7,9 @@
                 </div>
                 <div class="icon_contact">
                     <a href="#"><span><i class="fa fa-twitter"></i></span></a>
-                    <a href="#"><span><i class="fa fa-instagram"></i></span></a>
-                    <a href="#"><span><i class="fa fa-facebook"></i></span></a>
-                    <a href="#"><span><i class="    fa fa-envelope"></i></span></a>
+                    <a href="https://www.instagram.com/cruz.phong_tp/"><span><i class="fa fa-instagram"></i></span></a>
+                    <a href="https://www.facebook.com/tranthuanphong.quach/"><span><i class="fa fa-facebook"></i></span></a>
+                    <a href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin"><span><i class="fa fa-envelope"></i></span></a>
                 </div>
             </div>
         </div>
@@ -32,13 +32,11 @@
                         </ul>
                     </li>
 
-                    <li class="nav__menu_li"><a href="#">Liên Hệ&nbsp;<i class="fa fa-angle-down"></i></a>
+                    <li class="nav__menu_li"><a href="#">Thông tin&nbsp;<i class="fa fa-angle-down"></i></a>
                         <div class="">
                             <ul class="menu__nav list-style-none font-w400 font-3">
-                                <li><a href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin">Email</a></li>
-                                <li><a href="https://www.facebook.com/tranthuanphong.quach/">Facebook</a></li>
-                                <li><a href="https://www.instagram.com/cruz.phong_tp/">Instargam</a></li>
-                                <li><a href="#">Phone</a></li>
+                                <li><a href="{{route('user__list')}}">Thông tin thành viên</a></li>
+                                <li><a href="{{route('contact')}}">Liên hệ</a></li>
                             </ul>
                         </div>
                     </li>
@@ -97,22 +95,17 @@
             <div class="bar__content--info">
                 <p class="font-2 font-w400"><i class="fa fa-map-marker"></i>&ensp;Dai hoc Can Tho, XuanKhanh, NinhKieu, CanTho</p>
                 <p class="font-2 font-w400"><i class="fa fa-phone">&ensp; </i> (212) 862-3680</p>
-                <p class="font-2 font-w400"><i class="fa fa-envelope-o">&ensp; </i> phongb1709617@student.ctu.edu.vn.com</p>
+                <p class="font-2 font-w400"><i class="fa fa-envelope-o">&ensp; </i> booksharingnetwork@gmail.com</p>
             </div>
         </div>
     </div>
-{{--<div class="search__content">--}}
-{{--    <form action="{{action("HomeController@findBookByName")}}" method="get">--}}
-{{--        <input type="text" name="search" id="" placeholder="Search"/>--}}
-{{--        <button type="submit">Search</button>--}}
-{{--    </form>--}}
-{{--</div>--}}
-
 <div class="overlay__search">
     <div class="search__content">
         <div class="overlay__header--search">
-            <form action="{{action("HomeController@findBookByName")}}" method="get">
-                <input class="font-2 font-w400 search__form" type="text" name="search" id="" placeholder="Search"/>
+            <form action="{{route('findBookByName')}}" method="GET">
+{{--                @csrf--}}
+                <input class="font-2 font-w400 search__form position-relative" type="text" name="search" id="search_value" placeholder="Search"/>
+                <div class="search-content-class" id="search-content"></div>
             </form>
         </div>
     </div>

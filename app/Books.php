@@ -11,4 +11,5 @@ class Books extends Model
     {
         return $this->belongsTo('app\Books', 'id_type', 'books_id');
     }
+//    protected $primaryKey = "books_id";
 }

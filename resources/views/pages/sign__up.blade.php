@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label><b class="font-3 font-w500">Ảnh đại diện:</b></label>
-                    <input type="file" name="avatar">
+                    <input type="file" name="avatar" id="avatar">
                 </div>
                 <div class="form-group">
                     <label for="phone"><b class="font-3 font-w500">Số điện thoại:</b></label>
@@ -54,6 +54,8 @@
 @endsection
 @section('js')
     <script src="/js/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
     <script>
         $("form[name='register']").validate({
             rules: {
@@ -88,8 +90,9 @@
                 ward:{
                     required: true,
                 } ,
-                image:{
-                    required: true,
+                avatar:{
+                    required:true,
+                    accept: "jpg,jpeg,png",
                 },
             },
             messages: {
@@ -121,7 +124,8 @@
                     required: "* Trường không được để trống",
                 },
                 avatar:{
-                    required: "* Vui lòng thêm ảnh vào"
+                    required: "* Vui lòng thêm ảnh vào",
+                    accept: "* Chỉ chấp nhận file dạng ảnh!"
                 }
             },
             highlight: function(element) {

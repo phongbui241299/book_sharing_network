@@ -20,14 +20,11 @@
                     <label for="name"><b class="font-3 font-w500">Họ tên người dùng:</b></label>
                     <input type="text" value="{{$use->user_name}}" class="form-control" id="name" placeholder="Nhập và họ tên người dùng" name="name" required>
                 </div>
-                <div class="form-group">
-                    <label for="password"><b  class="font-3 font-w500">Mật khẩu:</b></label>
-                    <input type="password"  value="{{$use->password}}" class="form-control" id="password" placeholder="Nhập vào mậu khẩu" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="re_password"><b class="font-3 font-w500">Nhập lại mật khẩu:</b></label>
-                    <input type="password" name="re_password"  value="{{$use->password}}" class="form-control" id="re_password" placeholder="Nhập lại mậu khẩu" name="repassword" required>
-                </div>
+                    <div class="form-group">
+                        <label for="email"><b class="font-3 font-w500">Email</b></label>
+                        <input type="text" readonly class="form-control" value="{{$use->email}}" id="email" placeholder="Nhập vào Email" name="email" >
+                    </div>
+
                 <div class="form-group">
                     <label><b class="font-3 font-w500">Ảnh đại diện:</b></label>
                     <input type="file" name="avatar">
@@ -146,6 +143,7 @@
 
 
     </script>
+
     <script src="/js/Application.js"></script>
 @endsection
 

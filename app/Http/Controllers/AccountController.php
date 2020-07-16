@@ -32,6 +32,9 @@ class AccountController extends Controller
         $user->user_name = ucwords($request->name);
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        request()->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
         $files = $request->avatar;
         $file_name = time() . "_" . md5(rand(0, 99999)) . $files->getClientOriginalName();
         $user->avatar =  "uploads/avatar/".$file_name;

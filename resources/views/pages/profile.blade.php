@@ -63,6 +63,7 @@
                 <div class="detail_book">
                     <ul class="d-flex list-style-none nav__menu">
                 <li><a  class="font-2 font-w500" href="{{route('get_edit__profile',$user->user_id)}}">Chỉnh sửa thông tin</a></li>
+                <li><a class="font-2 font-w500" href="{{route('get_change_pass',$user->user_id)}}">Đổi mật khẩu</a></li>
                     </ul>
                 </div>
             @else

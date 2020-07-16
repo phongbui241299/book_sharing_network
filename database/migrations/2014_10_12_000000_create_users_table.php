@@ -22,6 +22,15 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+//        Schema::table('transactions', function (Blueprint $table) {
+//            $table->dropForeign('transactions_id');
+//            $table->foreign('order_id')
+//                ->references('id')->on('orders')
+//                ->onDelete('cascade')
+//                ->change();
+//        });
+
+
     }
 
     /**

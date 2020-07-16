@@ -58,6 +58,11 @@ Route::group(['prefix'=>'edit__books'], function (){
     Route::post('/{id}','HomeController@post_edit_books')->name('post_edit_books');
 });
 
+Route::group(['prefix'=>'change_pass'], function () {
+    Route::get('/{id}', 'HomeController@get_change_pass')->name('get_change_pass');
+    Route::post('/{id}','HomeController@post_change_pass')->name('post_change_pass');
+});
+
 Route::get('/book_category/{name}','HomeController@getBookByCategory')->name('getBookByCategory');
 
 Route::group(['prefix'=>'account'], function (){

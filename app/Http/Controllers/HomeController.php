@@ -300,17 +300,30 @@ class HomeController extends Controller
         $user = DB::table('user')->where('user_id', $id)
             ->update([
                 'user_name' =>  ucwords($request->name),
-                'password' => bcrypt($request->password),
                 'phone' => $request->phone,
                 'city' => $request->city,
                 'district' => $request->district,
                 'ward' => $request->ward,
                 'avatar' =>  "uploads/avatar/".$file_name,
             ]);
-
         $rawMsg = 'Bạn đã cập nhật thành công!';
         $mess_update = "$rawMsg";
         return redirect()->back()->with('mess_update',$mess_update);
+    }
+    public function get_change_pass($id)
+    {
+        $user = DB::table("user")->where("user_id", "=", $id)->get();
+        return view('pages.edit_password', compact('user'));
+    }
+
+    public function post_change_pass(Request $request,$id){
+        $user = DB::table('user')->where('user_id', $id)
+            ->update([
+                'password' => bcrypt($request->password),
+            ]);
+        $rawMsg = 'Bạn đã cập nhật mật khẩu thành công!';
+        $mess_update = "$rawMsg";
+        return redirect()->back()->with('mess_update_pass',$mess_update);
     }
 
     public function get_edit__books($id){

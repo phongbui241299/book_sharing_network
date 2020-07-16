@@ -5,6 +5,7 @@ use App\Book_type;
 use App\Books;
 use App\Comments;
 use App\User;
+use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Auth;
@@ -45,6 +46,14 @@ class AdminController extends Controller
         return redirect()->back()->with("delete_mes", $msg);
     }
 
+//    public function delete_user($id)
+//    {
+//        $user = DB::table('user')->where('user_id',$id)
+//            ->delete();
+//        $rawMsg = 'Bạn đã vô hiệu hóa người dùng thành công';
+//        $msg = "$rawMsg";
+//        return redirect()->back()->with("delete_mes", $msg);
+//    }
     public function type_book_manager(){
         $type = DB::table('book_type')->get();
         return view('admin.typebook_manager',compact('type'));

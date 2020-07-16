@@ -254,13 +254,13 @@ class HomeController extends Controller
     {
         strip_tags($id);
         $id = intval($id);
-        $user = DB::table("user")->where("user_id", "=", "$id")->get();
-        $user = $user->first();
+        $user = $id;
         //query truy van giao dich
         $transactions = DB::table('transaction')
             ->join('books', 'transaction.books_id', '=', 'books.books_id')
-            ->select('books.*', 'transaction.*')
-            ->where('transaction.user_id', '=', "$user->user_id")
+            ->join('user','transaction.user_id','=','user.user_id')
+            ->select('books.*', 'transaction.*','user.*')
+            ->where('transaction.user_id', '=', $user)
             ->get();
         $address = DB::table("user")
             ->join('devvn_tinhthanhpho','user.city','=','devvn_tinhthanhpho.matp')
@@ -271,12 +271,12 @@ class HomeController extends Controller
             ->get();
 //        dd($address);
         //hien thi sach dang so huu
-        $books = DB::table('books')
-            ->join('user', 'books.uploader', '=', 'user.user_id')
-            ->select('books.*', 'user.*')
-            ->where('books.uploader', '=', "$user->user_id")
-            ->get();
-        return view('pages.profile', compact(['user', 'transactions', 'books','address']));
+//        $books = DB::table('books')
+//            ->join('user', 'books.uploader', '=', 'user.user_id')
+//            ->select('books.*', 'user.*')
+//            ->where('books.uploader', '=', "$user->user_id")
+//            ->get();
+        return view('pages.profile', compact(['user','transactions','address']));
     }
     public function get_edit__profile($id){
 //        strip_tags($id);

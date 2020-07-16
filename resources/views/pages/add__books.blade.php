@@ -9,8 +9,6 @@
                     <h2 class="font-3 font-w500">Thêm sách</h2>
                     @csrf
                     <div class="form-group">
-                        <label><b class="font-3 font-w500">Ảnh sách:</b></label>
-                        <input type="file" name="book_image">
 
                         <div class="form-group">
                             <label for="bookname"><b class="font-3 font-w500">Tên sách:</b></label>
@@ -42,6 +40,9 @@
                             <label><b class="font-3 font-w500">Số trang</b></label>
                             <input type="number" name="amount" class="form-control" id="amount" required aria-describedby="amount"/>
                         </div>
+                        <label><b class="font-3 font-w500">Ảnh sách:</b></label>
+                        <input type="file" accept="image/*" name="book_image">
+
                         <div class="form-group">
                             <label for="status"><b class="font-3 font-w500">Mô tả:</b></label>
                             <textarea name="status" id="status" required    ></textarea>
@@ -59,6 +60,8 @@
 @section('js')
     <script>CKEDITOR.replace('status');</script>
     <script src="/js/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
     <script>
         $("form[name='add_books']").validate({
             rules: {
@@ -68,22 +71,23 @@
                 author: {
                     required: true,
                 },
-                type_id:{
+                type_id: {
                     required: true,
                 } ,
-                publisher:{
+                publisher: {
                     required: true,
                 },
-                amount:{
+                amount: {
                     required: true,
+                    digits: true
                 },
-                book_image:{
+                status: {
                     required:true,
                 },
-                status:{
+                book_image: {
                     required:true,
-                }
-
+                    accept: "image/x-png, image/gif, image/jpg, image/*",
+                },
             },
             messages: {
                 bookname: {
@@ -94,16 +98,17 @@
                 },
                 type_id: {
                     required: "* Vui lòng chọn loại sách",
-                }
-                ,
+                },
                 publisher: {
                     required: "* Vui lòng nhập vào tên nhà xuất bản",
                 },
-                amount:{
+                amount: {
                     required: "* Vui lòng nhập số trang của sách",
+                    digits: "* Trường này chỉ bao gồm các số"
                 },
                 book_image: {
-                    required: "* Trường ảnh không được để trống",
+                    required: "* Vui lòng thêm ảnh vào",
+                    accept: "* Chỉ chấp nhận file dạng ảnh!"
                 },
                 status:{
                     required: "* Vui lòng nhập vào mô tả sách",
@@ -117,10 +122,8 @@
             },
             submitHandler: function(form) {
                 form.submit();
-            }
+            },
         });
-
-
     </script>
     <script src="/js/Application.js"></script>
 @endsection

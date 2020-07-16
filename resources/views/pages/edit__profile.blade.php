@@ -4,7 +4,6 @@
         <div class="detail_page_type">
                 <span>
                     <a class="font-3 font-w400" href="{{route('index')}}">Trang chủ</a>&ensp;<i class="fa fa-caret-right"></i>&ensp;
-                    <a class="font-3 font-w400" href="">Thông tin cá nhân </a><i     class="fa fa-caret-right"></i>&ensp;
                     <a class="font-3 font-w400" href="">Chỉnh sửa thông tin cá nhân </a>&ensp;
                 </span>
         </div>

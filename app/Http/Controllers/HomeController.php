@@ -256,6 +256,9 @@ class HomeController extends Controller
         $id = intval($id);
         $user = $id;
         //query truy van giao dich
+        $ownerUser = DB::table("user")
+            ->where('user_id',$id)
+            ->get();
         $transactions = DB::table('transaction')
             ->join('books', 'transaction.books_id', '=', 'books.books_id')
             ->join('user','transaction.user_id','=','user.user_id')
@@ -271,12 +274,12 @@ class HomeController extends Controller
             ->get();
 //        dd($address);
         //hien thi sach dang so huu
-//        $books = DB::table('books')
-//            ->join('user', 'books.uploader', '=', 'user.user_id')
-//            ->select('books.*', 'user.*')
-//            ->where('books.uploader', '=', "$user->user_id")
-//            ->get();
-        return view('pages.profile', compact(['user','transactions','address']));
+        $books = DB::table('books')
+            ->join('user', 'books.uploader', '=', 'user.user_id')
+            ->select('books.*', 'user.*')
+            ->where('books.uploader', '=', $id)
+            ->get();
+        return view('pages.profile', compact(['user','transactions','address','ownerUser','books']));
     }
     public function get_edit__profile($id){
 //        strip_tags($id);

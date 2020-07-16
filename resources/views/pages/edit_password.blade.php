@@ -1,6 +1,13 @@
 @extends('master')
 @section('content')
+
 <div class="container login__index">
+    <div class="detail_page_type">
+                <span>
+                    <a class="font-3 font-w400" href="{{route('index')}}">Trang chủ</a>&ensp;<i class="fa fa-caret-right"></i>&ensp;
+                    <a class="font-3 font-w400" href="">Đổi mật khẩu </a>&ensp;
+                </span>
+    </div>
     <div class="container login__index--inside">
         @foreach($user as $use)
         <form action="{{route('post_change_pass',$use->user_id)}}" method="POST" enctype="multipart/form-data" class="form__group">

@@ -26,7 +26,6 @@
             </div>
         </div>
         <div class="container">
-            <p class="font-3" style="color: red">* Đổi thành trạng thái 1 khi muốn ẩn loại sách</p>
             <table class="table">
                 <thead>
                 <tr>
@@ -54,7 +53,7 @@
                         <td>
                             <div class="form-group">
                                 <select id="type_id" name="state">
-                                    <option disabled selected>{{$type_book->state}}</option>
+                                    <option disabled selected>--Chọn trạng thái--</option>
                                     <option value="0">Hiện</option>
                                     <option value="1">Ẩn</option>
                                 </select>

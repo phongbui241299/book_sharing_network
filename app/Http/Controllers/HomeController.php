@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Book_type;
 use App\Books;
-use App\Comments;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -282,8 +281,6 @@ class HomeController extends Controller
         return view('pages.profile', compact(['user','transactions','address','ownerUser','books']));
     }
     public function get_edit__profile($id){
-//        strip_tags($id);
-//        $id = intval($id);
         $city = DB::table('devvn_tinhthanhpho')->get();
         $user = DB::table("user")->where("user_id", "=", $id)->get();
         $address = DB::table("user")

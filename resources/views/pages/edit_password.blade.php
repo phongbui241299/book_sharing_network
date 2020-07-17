@@ -10,7 +10,7 @@
     </div>
     <div class="container login__index--inside">
         @foreach($user as $use)
-        <form action="{{route('post_change_pass',$use->user_id)}}" method="POST" enctype="multipart/form-data" class="form__group">
+        <form action="{{route('post_change_pass',$use->user_id)}}" name="register" method="POST" enctype="multipart/form-data" class="form__group">
             @csrf
             @if (session('mess_update_pass'))
                 <p class="alert alert-success">{{session('mess_update_pass')}}</p>
@@ -35,17 +35,61 @@
 </div>
 @endsection
 @section('js')
-<script>
-    $(document).ready(function(){
-        $("#changePassword").change(function(){
-            if($(this).is(":checked")){
-                $(".password").removeAttr('disabled');
+    <script src="/js/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+    <script>
+        $("form[name='register']").validate({
+            rules: {
+                password:{
+                    required: true,
+                    minlength:6,
+                    maxlength:16
+                } ,
+                re_password:{
+                    equalTo: "#password",
+                    required: true,
+                } ,
+
+            },
+            messages: {
+                password: {
+                    required: "*Password không được để trống",
+                    minlength: "*Password quá ngắn! Hãy nhập trên 6 kí tự",
+                    maxlength: "*Password không được quá 16 kí tự"
+                },
+                re_password: {
+                    equalTo: "* Mật khẩu không trùng khớp!",
+                    required: "* Trường này không được để trống",
+                },
+
+            },
+            highlight: function(element) {
+                $(element).parent().addClass('has-error');
+            },
+            unhighlight: function(element) {
+                $(element).parent().removeClass('has-error');
+            },
+            submitHandler: function(form) {
+                form.submit();
             }
-            else
-            {
-                $(".passwords").attr('disabled','');
-            }
-        })
-    });
-</script>
+        });
+
+
+    </script>
+
+    <script src="/js/Application.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#changePassword").change(function(){
+                if($(this).is(":checked")){
+                    $(".password").removeAttr('disabled');
+                }
+                else
+                {
+                    $(".passwords").attr('disabled','');
+                }
+            })
+        });
+    </script>
     @endsection

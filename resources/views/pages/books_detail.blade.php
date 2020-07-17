@@ -49,7 +49,8 @@
                         @endif
                         @if (!Auth::check())
                             <input class="borrow_button"  onclick="warning__borrow()" type="submit" value="Mượn sách">
-                                <li><a class="font-2 font-w500" href="{{route('profile',$book->uploader)}}">Người sở hữu</a></li>
+                            <input class="borrow_button" style="margin-left: 70px" onclick="warning__borrow()" type="submit" value="Người sở hữu">
+
                         @else
                         @endif
                         @if (Auth::check() && Auth::user()->user_id == $book->uploader)

@@ -56,7 +56,7 @@
                     <td>
                         <div class="form-group">
                             <select id="type_id" name="role">
-                                <option disabled selected>{{$mem->role}}</option>
+                                <option disabled selected>--Chọn trạng thái--</option>
                                     <option value="0">Bình thường</option>
                                     <option value="3">Vô hiệu hóa</option>
                             </select>

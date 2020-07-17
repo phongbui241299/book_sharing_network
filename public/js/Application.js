@@ -135,7 +135,7 @@
 })(jQuery);
 //--js--
 function warning__borrow(){
-    alert("Vui lòng đăng nhập để tiếp tục mượn sách");
+    alert("Vui lòng đăng nhập để tiếp tục thực hiện thao tác này!");
     location.replace('/account/login');
 }
 

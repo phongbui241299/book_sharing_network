@@ -73,9 +73,9 @@
                         </li>
                     @endif
                 </div>
-                <div class="cart font-2 font-w400">
-                    <a href="#"><p><i class="fa fa-shopping-bag" aria-hidden="true"></i></p></a>
-                </div>
+{{--                <div class="cart font-2 font-w400">--}}
+{{--                    <a href="#"><p><i class="fa fa-shopping-bag" aria-hidden="true"></i></p></a>--}}
+{{--                </div>--}}
                 <div class="search font-2 font-w400">
                     <p><i class="fa fa-search" aria-hidden="true"></i></p>
                 </div>

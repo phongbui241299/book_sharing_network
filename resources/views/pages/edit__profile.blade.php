@@ -59,6 +59,8 @@
 
 @section('js')
     <script src="/js/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
     <script>
         $("form[name='register']").validate({
             rules: {
@@ -69,7 +71,7 @@
                 },
                 name: {
                     required: true,
-                    maxlength:16,
+                    maxlength:50,
                 },
                 phone: {
                     required: true,
@@ -110,7 +112,7 @@
                 email: "* Email không được để trống",
                 name: {
                     required: "* Tên không được để trống",
-                    maxlength:"* Tên không quá 16 kí tự",
+                    maxlength:"* Tên không quá 50 kí tự",
                 },
                 phone:{
                     required:  "* Số điện thoại không được để trống",
